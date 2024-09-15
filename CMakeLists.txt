@@ -7,3 +7,10 @@ target_compile_options(sepet PRIVATE -Wall)
 target_include_directories(sepet PRIVATE include/sepet)
 
 add_subdirectory(src)
+
+add_executable(sptest src/main.c)
+target_compile_options(sptest PRIVATE -std=c99 -Wall -O2)
+target_include_directories(sptest PRIVATE include/)
+target_link_libraries(sptest PRIVATE
+    sepet
+)

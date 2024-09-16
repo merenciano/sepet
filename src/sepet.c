@@ -198,3 +198,14 @@ spt_delete(spt_context *ctx, int field, uint32_t element)
 
     /* TODO: entries pass extracting the ones who reference the deleted elem */
 }
+
+uint32_t
+spt_get_id(spt_context *ctx, int field, const char *name)
+{
+    _SPT_CHECK_CTX(ctx, -1);
+    _SPT_CHECK_FIELD(ctx, field, -1);
+
+    spt_name *it = ctx->building_names + field * SPT_MAX_FIELDS;
+    for (; strncmp((char*)it, name, SPT_NAME_SIZE); ++it);
+    return it - (ctx->building_names + field * SPT_MAX_FIELDS);
+}

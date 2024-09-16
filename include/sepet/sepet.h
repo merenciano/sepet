@@ -189,4 +189,13 @@ void spt_delete(
  */
 static inline spt_context spt_mkctx() { return *spt_reset(&(spt_context){}); }
 
+/**
+ * @brief Obtain an element's ID.
+ * @note Inefficient function. Performance-aware apps should cache their ids.
+ */
+uint32_t spt_get_id(
+    spt_context *ctx,
+    int          field,
+    const char  *name);
+
 #endif // __SEPET_H__

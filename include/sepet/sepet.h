@@ -1,3 +1,19 @@
+/*
+ * TODO:
+ *  -  Binary format and import / export
+ *
+ *
+ *
+ * BUGS:
+ *  -  spt_delete leaves empty gaps which are interpreted as the end of the vector of names
+ *  -  spt_extract does not remove the entry
+ *
+ *
+ *
+ *
+ *
+ */
+
 #ifndef __SEPET_H__
 #define __SEPET_H__
 
@@ -197,5 +213,22 @@ uint32_t spt_get_id(
     spt_context *ctx,
     int          field,
     const char  *name);
+
+
+/*
+ * * * * spt_name helpers * * * *
+ */
+#define SPT_NAME_CODE_NULL 0x0081
+#define SPT_NAME_CODE_FREE 0x0082
+
+/* Check if name is empty string, i.e. buf[0] == '\0'. */
+static inline int spt_name_is_empty(spt_name *n) { return !*n->buf; }
+
+/* Clears contents of a name. The cleared name is guaranteed to be empty. */
+static inline void spt_name_clear(spt_name *n) { *n->buf = 0; }
+
+/* Marks the name as freed so its memory can be reused by the next alias definition. */
+static inline void spt_name_release(spt_name *n) { *(uint16_t*)n->buf = SPT_NAME_CODE_FREE; }
+
 
 #endif // __SEPET_H__

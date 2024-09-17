@@ -53,9 +53,6 @@ static const char* SPT_FIELD_NAMES[SPT_FIELD_COUNT] = {
 /* Check if name is empty string, i.e. buf[0] == '\0'. */
 static int _spt_empty(spt_name *n) { return !*n->buf; }
 
-/* Clears contents of a name. The cleared name is guaranteed to be empty. */
-static void _spt_clear(spt_name *n) { *n->buf = 0; }
-
 spt_context *
 spt_reset(spt_context *ctx)
 {
@@ -193,7 +190,7 @@ spt_delete(spt_context *ctx, int field, uint32_t element)
         return;
     }
 
-    _spt_clear(name + element);
+    spt_name_release(name + element);
     ctx->out_error = SPT_SUCCESS;
 
     /* TODO: entries pass extracting the ones who reference the deleted elem */
